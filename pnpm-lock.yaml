@@ -75,6 +75,9 @@ importers:
       '@eslint/js':
         specifier: ^9.25.0
         version: 9.27.0
+      '@types/dom-speech-recognition':
+        specifier: ^0.0.6
+        version: 0.0.6
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.4
@@ -606,6 +609,9 @@ packages:
 
   '@types/cors@2.8.18':
     resolution: {integrity: sha512-nX3d0sxJW41CqQvfOzVG1NCTXfFDrDWIghCZncpHeWlVFd81zxB/DLhg7avFg6eHLCRX7ckBmoIIcqa++upvJA==}
+
+  '@types/dom-speech-recognition@0.0.6':
+    resolution: {integrity: sha512-o7pAVq9UQPJL5RDjO1f/fcpfFHdgiMnR4PoIU2N/ZQrYOS3C5rzdOJMsrpqeBCbii2EE9mERXgqspQqPDdPahw==}
 
   '@types/estree@1.0.7':
     resolution: {integrity: sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ==}
@@ -2477,6 +2483,8 @@ snapshots:
   '@types/cors@2.8.18':
     dependencies:
       '@types/node': 22.15.18
+
+  '@types/dom-speech-recognition@0.0.6': {}
 
   '@types/estree@1.0.7': {}
 

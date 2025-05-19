@@ -20,13 +20,14 @@ export const RecordPage = () => {
     if (!topic) {
       navigate("/topic");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (hasResults) {
       navigate("/results");
     }
-  }, [hasResults]);
+  }, [hasResults, navigate]);
 
   const handleTranscriptStart = useCallback(() => {
     reset();
@@ -43,6 +44,7 @@ export const RecordPage = () => {
 
   const handleTranscriptEnd = useCallback(
     (value: string) => {
+      console.log('FINAL', value);
       setFinalStranscript(value);
     },
     [setFinalStranscript]

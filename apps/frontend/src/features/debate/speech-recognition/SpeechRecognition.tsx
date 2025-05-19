@@ -1,18 +1,9 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui/button/Button";
-import { useSpeechRecognition } from "./useSpeechRecognition";
+import { useSpeechRecognition } from "./hooks/useSpeechRecognition";
 import { useCurrentLanguage } from "@/hooks/useCurrentLanguage";
-
-const RECORDING_DURATION = 30; // seconds
-
-// Add type definitions for Web Speech API
-declare global {
-  interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
-  }
-}
+import { RECORDING_TIMEOUT } from "@/const/app.const";
 
 export const SpeechRecognition = (props: {
   handleTranscriptStart: () => void;
@@ -28,7 +19,7 @@ export const SpeechRecognition = (props: {
 
   const { isRecording, startRecording, stopRecording, timeLeft } =
     useSpeechRecognition({
-      duration: RECORDING_DURATION,
+      duration: RECORDING_TIMEOUT,
       handleTranscriptStart: props.handleTranscriptStart,
       onTranscriptEnd: props.handleTranscriptEnd,
       language: language === "en" ? "en-US" : "ru-RU",
@@ -37,10 +28,6 @@ export const SpeechRecognition = (props: {
     });
 
   const toggleRecording = () => {
-    // setTimeout(() => {
-    //   props.handleTranscriptChange("раз два три");
-    //   props.handleTranscriptEnd("раз два три");
-    // }, 500);
     if (isRecording) {
       stopRecording();
     } else {
@@ -51,6 +38,7 @@ export const SpeechRecognition = (props: {
   return (
     <div className="flex flex-col items-center py-8 space-y-4">
       <Button
+        type="button"
         onClick={toggleRecording}
         className={`relative w-32 h-32 rounded-full flex items-center justify-center ${
           isRecording ? "ring-4 ring-red-400 ring-opacity-50 animate-pulse" : ""
@@ -106,7 +94,7 @@ export const SpeechRecognition = (props: {
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
               className="h-full bg-indigo-600 transition-all duration-1000 ease-linear"
-              style={{ width: `${(timeLeft / RECORDING_DURATION) * 100}%` }}
+              style={{ width: `${(timeLeft / RECORDING_TIMEOUT) * 100}%` }}
             />
           </div>
           <div className="text-center text-gray-600">
