@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
-  base: "debate-voice-ai",
+  base: "/debate-voice-ai/",
   build: {
     outDir: "dist",
   },

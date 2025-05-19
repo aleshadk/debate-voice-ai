@@ -6,7 +6,7 @@ import { ResultsPage } from "@/pages/results";
 
 export const RouterProvider = () => {
   return (
-    <BrowserRouter basename="/debate-voice-ai-assistant">
+    <BrowserRouter basename="/debate-voice-ai">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/topic" element={<TopicPage />} />

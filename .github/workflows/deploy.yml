@@ -1,6 +1,7 @@
 name: Deploy Frontend to GitHub Pages
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
@@ -15,16 +16,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: |
+            - args: [--frozen-lockfile]
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          cache: "pnpm"
 
       - name: Build Vite app
         run: pnpm run build
@@ -33,4 +37,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: packages/frontend/dist
+          publish_dir: apps/frontend/dist

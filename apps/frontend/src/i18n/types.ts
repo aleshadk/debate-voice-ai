@@ -1,34 +1,34 @@
-import "i18next";
+import "react-i18next";
 
-declare module "i18next" {
+declare module "react-i18next" {
   interface CustomTypeOptions {
     defaultNS: "translation";
     resources: {
-      common: {
-        checkBackend: string;
-        response: string;
-        language: string;
-      };
-      debate: {
-        title: string;
-        enterTopic: string;
-        description: string;
-        recordResponse: string;
-        stopRecording: string;
-        timeRemaining: string;
-        feedback: {
-          title: string;
-          strengths: string;
-          improvements: string;
+      translation: {
+        common: {
+          checkBackend: string;
+          response: string;
+          language: string;
         };
-        recognizedSpeech: string;
-        recognizedSpeechPlaceholder: string;
-        strengths: string;
-        strengthsPlaceholder: string;
-        improvements: string;
-        improvementsPlaceholder: string;
-        nextTopic: string;
-        nextTopicPlaceholder: string;
+        debate: {
+          goToRecord: string;
+          topic: string;
+          process: string;
+          enterTopic: string;
+          recordResponse: string;
+          stopRecording: string;
+          recognizedSpeech: string;
+          recognizedSpeechPlaceholder: string;
+          feedback: string;
+          strengths: string;
+          strengthsPlaceholder: string;
+          improvements: string;
+          improvementsPlaceholder: string;
+          nextTopic: string;
+          nextTopicPlaceholder: string;
+          remaining: string;
+          startOver: string;
+        };
       };
     };
   }

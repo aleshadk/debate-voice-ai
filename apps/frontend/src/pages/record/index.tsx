@@ -44,7 +44,7 @@ export const RecordPage = () => {
 
   const handleTranscriptEnd = useCallback(
     (value: string) => {
-      console.log('FINAL', value);
+      console.log("FINAL", value);
       setFinalStranscript(value);
     },
     [setFinalStranscript]
