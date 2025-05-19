@@ -9,7 +9,7 @@ import { useCallback, useState } from "react";
 import { useDebateContext } from "@/contexts/DebateContext";
 
 export const DebateWidget = () => {
-  const { topic } = useDebateContext();
+  const { topic, feedback, topicSuggestions, hasResults } = useDebateContext();
   const { t } = useTranslation();
   const [transcript, setTranscript] = useState("");
 
@@ -22,7 +22,6 @@ export const DebateWidget = () => {
 
   return (
     <div className="max-w-3xl mx-auto space-y-12">
-      {/* Header with language switcher */}
       <div className="flex justify-between items-center">
         <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
           {t("debate.title")}
@@ -30,14 +29,6 @@ export const DebateWidget = () => {
         <LanguageSwitcher />
       </div>
 
-      {/* Project description */}
-      <Card>
-        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          {t("debate.description")}
-        </p>
-      </Card>
-
-      {/* Topic input */}
       <Card>
         <div className="space-y-3">
           <label
@@ -54,10 +45,10 @@ export const DebateWidget = () => {
         </div>
       </Card>
 
-      {/* Voice recording button */}
-      <SpeechRecognition handleTranscriptChange={handleTranscriptChange} />
+      {!hasResults && (
+        <SpeechRecognition handleTranscriptChange={handleTranscriptChange} />
+      )}
 
-      {/* Recognized speech */}
       <Card>
         <h2 className="text-xl font-medium text-indigo-600 mb-4">
           {t("debate.recognizedSpeech")}
@@ -67,11 +58,8 @@ export const DebateWidget = () => {
         </p>
       </Card>
 
-      {/* Feedback section */}
-      <Feedback />
-
-      {/* Next debate topic */}
-      <NextTopic />
+      {feedback && <Feedback />}
+      {topicSuggestions && <NextTopic />}
     </div>
   );
 };

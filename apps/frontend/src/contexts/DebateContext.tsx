@@ -12,18 +12,15 @@ import {
   DEFAULT_TOPIC_EN,
   DEFAULT_TOPIC_RU,
 } from "@/shared/const/debate-topic";
-import { AnalyzeDebateAnswerResponseDTO } from "../api/debate";
-import { Loader } from "../shared/ui/Loader/Loader";
 
 interface DebateContextType {
   topic: string;
   isLoading: boolean;
   feedback: string | undefined;
   topicSuggestions: string[] | undefined;
+  hasResults: boolean;
   startDebate: (answer: string) => void;
-  analysis: AnalyzeDebateAnswerResponseDTO | null;
-  setAnalysis: (analysis: AnalyzeDebateAnswerResponseDTO) => void;
-  setIsLoading: (isLoading: boolean) => void;
+  setTopic: (topic: string) => void;
 }
 
 const DebateContext = createContext<DebateContextType | undefined>(undefined);
@@ -34,13 +31,10 @@ interface DebateProviderProps {
 
 export const DebateProvider = ({ children }: DebateProviderProps) => {
   const language = useCurrentLanguage();
-  const [topic] = useState(
+  const [topic, _setTopic] = useState(
     language === "ru" ? DEFAULT_TOPIC_RU : DEFAULT_TOPIC_EN
   );
-  const { mutate, isPending, data } = useDebateAnalysis();
-  const [analysis, setAnalysis] =
-    useState<AnalyzeDebateAnswerResponseDTO | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate, isPending, data, reset } = useDebateAnalysis();
 
   const feedback = useMemo(() => {
     return data?.feedback;
@@ -48,6 +42,10 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
 
   const topicSuggestions = useMemo(() => {
     return data?.topicSuggestions;
+  }, [data]);
+
+  const hasResults = useMemo(() => {
+    return data !== undefined;
   }, [data]);
 
   const startDebate = useCallback(
@@ -61,6 +59,14 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
     [mutate, language, topic]
   );
 
+  const setTopic = useCallback(
+    (topic: string) => {
+      _setTopic(topic);
+      reset();
+    },
+    [_setTopic]
+  );
+
   return (
     <DebateContext.Provider
       value={{
@@ -68,14 +74,12 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
         isLoading: isPending,
         feedback,
         topicSuggestions,
+        hasResults,
         startDebate,
-        analysis,
-        setAnalysis,
-        setIsLoading,
+        setTopic,
       }}
     >
       {children}
-      {isLoading && <Loader />}
     </DebateContext.Provider>
   );
 };
