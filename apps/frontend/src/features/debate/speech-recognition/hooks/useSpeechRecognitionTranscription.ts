@@ -1,9 +1,13 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 
 export const useSpeechRecognitionTranscription = () => {
   const [submittedText, setSubmittedText] = useState("");
   const [nextChunk, setNextChunk] = useState("");
   const finalTranscriptRef = useRef("");
+
+  useEffect(() => {
+    finalTranscriptRef.current = submittedText + nextChunk;
+  }, [submittedText, nextChunk]);
 
   const transcript = useMemo(() => {
     return submittedText + nextChunk;
@@ -15,22 +19,15 @@ export const useSpeechRecognitionTranscription = () => {
     finalTranscriptRef.current = "";
   }, []);
 
-  const updateTranscript = useCallback(
-    (value: string, isFinal: boolean) => {
-      if (isFinal) {
-        setNextChunk("");
-        setSubmittedText((prev) => {
-          const updated = prev + value;
-          finalTranscriptRef.current = updated;
-          return updated;
-        });
-        return;
-      }
+  const updateTranscript = useCallback((value: string, isFinal: boolean) => {
+    if (isFinal) {
+      setNextChunk("");
+      setSubmittedText((prev) => prev + value);
+      return;
+    }
 
-      setNextChunk(value);
-    },
-    []
-  );
+    setNextChunk(value);
+  }, []);
 
   return {
     transcript,

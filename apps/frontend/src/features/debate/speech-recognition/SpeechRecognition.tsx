@@ -29,7 +29,7 @@ export const SpeechRecognition = (props: {
 
   const toggleRecording = () => {
     if (isRecording) {
-      stopRecording();
+      stopRecording(true);
     } else {
       startRecording();
     }
