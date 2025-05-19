@@ -8,17 +8,12 @@ import {
 } from "react";
 import { useDebateAnalysis } from "@/hooks/useDebateAnalysis";
 import { useCurrentLanguage } from "@/hooks/useCurrentLanguage";
-import {
-  DEFAULT_TOPIC_EN,
-  DEFAULT_TOPIC_RU,
-} from "@/shared/const/debate-topic";
 
 interface DebateContextType {
   topic: string;
   isLoading: boolean;
   feedback: string | undefined;
   topicSuggestions: string[] | undefined;
-  isTopicSubmitted: boolean;
   hasResults: boolean;
   reset: () => void;
   startDebate: (answer: string) => void;
@@ -33,11 +28,8 @@ interface DebateProviderProps {
 
 export const DebateProvider = ({ children }: DebateProviderProps) => {
   const language = useCurrentLanguage();
-  const [topic, setTopic] = useState(
-    language === "ru" ? DEFAULT_TOPIC_RU : DEFAULT_TOPIC_EN
-  );
+  const [topic, setTopic] = useState("");
   const { mutate, isPending, data, reset } = useDebateAnalysis();
-  const [isTopicSubmitted, setIsTopicSubmitted] = useState(false);
 
   const hasResults = useMemo(() => {
     return data !== undefined;
@@ -53,7 +45,10 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
 
   const startDebate = useCallback(
     (answer: string) => {
-      setIsTopicSubmitted(true);
+      if (!topic || !answer) {
+        return;
+      }
+
       mutate({
         topic,
         userAnswer: answer,
@@ -71,7 +66,6 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
         feedback,
         topicSuggestions,
         hasResults,
-        isTopicSubmitted,
         startDebate,
         setTopic,
         reset,
