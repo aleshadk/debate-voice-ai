@@ -1,21 +1,28 @@
 import { Card } from "@/shared/ui/card/Card";
 import { Page } from "@/shared/ui/page/Page";
 import { LanguageSwitcher } from "@/widgets/language-switcher/ui/LanguageSwitcher";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 export const HomePage = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <Page>
       <h1 className="text-4xl text-center sm:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
-        {t("debate.title")}
+        AI and Voice API <br />
+        тренер по дебатам / coach for debates
       </h1>
       <Card>
         <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
-          {t("debate.description")}
+          Тренируйте навыки дебатов с ИИ. Введите тему, запишите свой ответ и
+          получите мгновенную связь по вашей аргументации
+        </p>
+
+        <br />
+
+        <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
+          Practice your debate skills with AI. Enter a topic, record your
+          response, and get feedback on your argumentation
         </p>
       </Card>
       <div className="flex justify-center">

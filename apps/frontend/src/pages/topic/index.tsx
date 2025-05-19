@@ -56,7 +56,7 @@ export const TopicPage = () => {
               disabled={!topicInput.trim()}
               className="w-full"
             >
-              {t("debate.start")}
+              {t("debate.goToRecord")}
             </Button>
           </div>
         </Card>

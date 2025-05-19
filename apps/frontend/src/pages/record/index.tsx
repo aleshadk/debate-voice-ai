@@ -17,6 +17,12 @@ export const RecordPage = () => {
   const [transcript, setTranscript] = useState("");
 
   useEffect(() => {
+    if (!topic) {
+      navigate("/topic");
+    }
+  }, []);
+
+  useEffect(() => {
     if (hasResults) {
       navigate("/results");
     }
@@ -52,7 +58,7 @@ export const RecordPage = () => {
       <div className="max-w-3xl mx-auto space-y-12">
         <Card>
           <h2 className="text-xl font-medium text-indigo-600 mb-4">
-            {t("debate.currentTopic")}
+            {t("debate.topic")}
           </h2>
           <p className="text-gray-600 text-lg">{topic}</p>
         </Card>

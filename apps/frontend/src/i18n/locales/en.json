@@ -1,28 +1,26 @@
 {
   "common": {
-    "checkBackend": "Check Backend Connection",
+    "checkBackend": "Check backend connection",
     "response": "Response",
     "language": "Language"
   },
   "debate": {
-    "title": "AI Debate Voice",
-    "description": "Practice your debate skills with AI. Enter a topic, record your response, and get instant feedback on your argumentation.",
+    "goToRecord": "Go to recording",
+    "topic": "Topic",
+    "process": "Submit",
     "enterTopic": "Enter debate topic",
-    "recordResponse": "Record your response",
+    "recordResponse": "Record response",
     "stopRecording": "Stop recording",
-    "recognizedSpeech": "Recognized Speech",
+    "recognizedSpeech": "Recognized speech",
     "recognizedSpeechPlaceholder": "Your speech will appear here...",
     "feedback": "Feedback",
     "strengths": "Strengths",
-    "strengthsPlaceholder": "Your argument's strengths will be listed here...",
-    "improvements": "Areas for Improvement",
+    "strengthsPlaceholder": "The strengths of your argument will appear here...",
+    "improvements": "Areas for improvement",
     "improvementsPlaceholder": "Suggestions for improvement will appear here...",
-    "nextTopic": "Next Debate Topic",
-    "nextTopicPlaceholder": "Here's another topic you can try...",
+    "nextTopic": "Next debate topic",
+    "nextTopicPlaceholder": "Here’s another topic you can try...",
     "remaining": "remaining",
-    "followUp": {
-      "title": "Follow-up questions",
-      "question": "Question {{number}}"
-    }
+    "startOver": "Enter topic manually"
   }
 }
