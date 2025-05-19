@@ -5,7 +5,7 @@ import { AnalyzeDebateAnswerSchema } from "./schemas/analyze-debate-answer.schem
 import { analyzeDebatesViaClaude } from "./services/analyze-debates-via-claude";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
