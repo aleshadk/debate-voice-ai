@@ -9,7 +9,11 @@ const port = process.env.PORT || 3000;
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://aleshadk.github.io",
+  })
+);
 app.use(express.json());
 
 app.post("/api/analyze-answer", async (req, res) => {
@@ -24,13 +28,7 @@ app.post("/api/analyze-answer", async (req, res) => {
     return;
   }
 
-  const result = await analyzeDebatesViaClaude({
-    language: "ru",
-    topic: "Стоит ли ограничивать детей в использовании гаджетов",
-    userAnswer:
-      "Нет, ограничивать детей в использовании гаджетов не нужно. Современные дети буквально рождаются с планшетом в руках — зачем мешать естественному отбору? Даже младенцы интуитивно свайпают экраны, а школьники могут обойти родительский контроль быстрее, чем ты найдёшь кнопку включения. Гаджеты — это их язык, их среда, их сила. Вместо того чтобы забирать устройства, лучше смириться: они всё равно научатся, просто без тебя.",
-  });
-
+  const result = await analyzeDebatesViaClaude(params.data);
   res.send(result);
 });
 
