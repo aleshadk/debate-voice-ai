@@ -12,6 +12,8 @@ import {
   DEFAULT_TOPIC_EN,
   DEFAULT_TOPIC_RU,
 } from "@/shared/const/debate-topic";
+import { AnalyzeDebateAnswerResponseDTO } from "../api/debate";
+import { Loader } from "../shared/ui/Loader/Loader";
 
 interface DebateContextType {
   topic: string;
@@ -19,6 +21,9 @@ interface DebateContextType {
   feedback: string | undefined;
   topicSuggestions: string[] | undefined;
   startDebate: (answer: string) => void;
+  analysis: AnalyzeDebateAnswerResponseDTO | null;
+  setAnalysis: (analysis: AnalyzeDebateAnswerResponseDTO) => void;
+  setIsLoading: (isLoading: boolean) => void;
 }
 
 const DebateContext = createContext<DebateContextType | undefined>(undefined);
@@ -33,6 +38,9 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
     language === "ru" ? DEFAULT_TOPIC_RU : DEFAULT_TOPIC_EN
   );
   const { mutate, isPending, data } = useDebateAnalysis();
+  const [analysis, setAnalysis] =
+    useState<AnalyzeDebateAnswerResponseDTO | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const feedback = useMemo(() => {
     return data?.feedback;
@@ -55,9 +63,19 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
 
   return (
     <DebateContext.Provider
-      value={{ topic, isLoading: isPending, feedback, topicSuggestions, startDebate }}
+      value={{
+        topic,
+        isLoading: isPending,
+        feedback,
+        topicSuggestions,
+        startDebate,
+        analysis,
+        setAnalysis,
+        setIsLoading,
+      }}
     >
       {children}
+      {isLoading && <Loader />}
     </DebateContext.Provider>
   );
 };
