@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Card } from "@/shared/ui/card/Card";
 import { Textarea } from "@/shared/ui/textarea/Textarea";
-import { LanguageSwitcher } from "@/features/debate/language-switcher/LanguageSwitcher";
 import { SpeechRecognition } from "@/features/debate/speech-recognition/SpeechRecognition";
 import { Feedback } from "@/features/debate/feedback/Feedback";
 import { NextTopic } from "@/features/debate/next-topic/NextTopic";
@@ -26,7 +25,6 @@ export const DebateWidget = () => {
         <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-indigo-800 bg-clip-text text-transparent">
           {t("debate.title")}
         </h1>
-        <LanguageSwitcher />
       </div>
 
       <Card>
@@ -37,11 +35,11 @@ export const DebateWidget = () => {
           >
             {t("debate.enterTopic")}
           </label>
-          <Textarea
+          {/* <Textarea
             id="topic"
             placeholder={t("debate.enterTopic")}
             value={topic}
-          />
+          /> */}
         </div>
       </Card>
 

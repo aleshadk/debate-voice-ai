@@ -18,7 +18,9 @@ interface DebateContextType {
   isLoading: boolean;
   feedback: string | undefined;
   topicSuggestions: string[] | undefined;
+  isTopicSubmitted: boolean;
   hasResults: boolean;
+  reset: () => void;
   startDebate: (answer: string) => void;
   setTopic: (topic: string) => void;
 }
@@ -31,10 +33,15 @@ interface DebateProviderProps {
 
 export const DebateProvider = ({ children }: DebateProviderProps) => {
   const language = useCurrentLanguage();
-  const [topic, _setTopic] = useState(
+  const [topic, setTopic] = useState(
     language === "ru" ? DEFAULT_TOPIC_RU : DEFAULT_TOPIC_EN
   );
   const { mutate, isPending, data, reset } = useDebateAnalysis();
+  const [isTopicSubmitted, setIsTopicSubmitted] = useState(false);
+
+  const hasResults = useMemo(() => {
+    return data !== undefined;
+  }, [data]);
 
   const feedback = useMemo(() => {
     return data?.feedback;
@@ -44,12 +51,9 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
     return data?.topicSuggestions;
   }, [data]);
 
-  const hasResults = useMemo(() => {
-    return data !== undefined;
-  }, [data]);
-
   const startDebate = useCallback(
     (answer: string) => {
+      setIsTopicSubmitted(true);
       mutate({
         topic,
         userAnswer: answer,
@@ -57,14 +61,6 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
       });
     },
     [mutate, language, topic]
-  );
-
-  const setTopic = useCallback(
-    (topic: string) => {
-      _setTopic(topic);
-      reset();
-    },
-    [_setTopic]
   );
 
   return (
@@ -75,8 +71,10 @@ export const DebateProvider = ({ children }: DebateProviderProps) => {
         feedback,
         topicSuggestions,
         hasResults,
+        isTopicSubmitted,
         startDebate,
         setTopic,
+        reset,
       }}
     >
       {children}

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 interface UseSpeechRecognitionProps {
   duration: number;
+  handleTranscriptStart: () => void;
   onTranscriptEnd: (transcript: string) => void;
   onTranscriptChange?: (transcript: string) => void;
   onError?: (error: string) => void;
@@ -10,6 +11,7 @@ interface UseSpeechRecognitionProps {
 
 export const useSpeechRecognition = ({
   duration,
+  handleTranscriptStart,
   onTranscriptEnd,
   onTranscriptChange,
   onError,
@@ -48,15 +50,10 @@ export const useSpeechRecognition = ({
 
     recognition.onresult = (event: SpeechRecognitionEvent) => {
       let combinedTranscript = "";
-      let isFinal = false;
 
       for (let i = event.resultIndex; i < event.results.length; ++i) {
         const result = event.results[i];
         combinedTranscript += result[0].transcript;
-
-        if (result.isFinal) {
-          isFinal = true;
-        }
       }
 
       finalTranscriptRef.current = combinedTranscript;
@@ -86,6 +83,8 @@ export const useSpeechRecognition = ({
   const startRecording = () => {
     const recognition = recognitionRef.current;
     if (!recognition) return;
+
+    handleTranscriptStart();
 
     try {
       finalTranscriptRef.current = "";

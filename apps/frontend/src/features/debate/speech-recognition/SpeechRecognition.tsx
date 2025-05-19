@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui/button/Button";
 import { useSpeechRecognition } from "./useSpeechRecognition";
 import { useCurrentLanguage } from "@/hooks/useCurrentLanguage";
-import { useDebateContext } from "@/contexts/DebateContext";
 
 const RECORDING_DURATION = 30; // seconds
 
@@ -16,35 +15,32 @@ declare global {
 }
 
 export const SpeechRecognition = (props: {
+  handleTranscriptStart: () => void;
   handleTranscriptChange: (value: string) => void;
+  handleTranscriptEnd: (value: string) => void;
 }) => {
   const { t } = useTranslation();
   const language = useCurrentLanguage();
-  const { startDebate } = useDebateContext();
 
   const onError = useCallback((error: string) => {
     console.error("Speech recognition error:", error);
   }, []);
 
-  const onTranscriptEnd = useCallback((text: string) => {
-    startDebate(text);
-    console.log("Transcript end:", text);
-  }, []);
-
-  const onTranscriptChange = useCallback(props.handleTranscriptChange, [
-    props.handleTranscriptChange,
-  ]);
-
   const { isRecording, startRecording, stopRecording, timeLeft } =
     useSpeechRecognition({
       duration: RECORDING_DURATION,
-      onTranscriptEnd,
+      handleTranscriptStart: props.handleTranscriptStart,
+      onTranscriptEnd: props.handleTranscriptEnd,
       language: language === "en" ? "en-US" : "ru-RU",
       onError,
-      onTranscriptChange,
+      onTranscriptChange: props.handleTranscriptChange,
     });
 
   const toggleRecording = () => {
+    // setTimeout(() => {
+    //   props.handleTranscriptChange("раз два три");
+    //   props.handleTranscriptEnd("раз два три");
+    // }, 500);
     if (isRecording) {
       stopRecording();
     } else {
