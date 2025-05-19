@@ -1,7 +1,9 @@
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/shared/ui/button/Button";
 import { useSpeechRecognition } from "./useSpeechRecognition";
+import { useCurrentLanguage } from "@/hooks/useCurrentLanguage";
+import { useDebateContext } from "@/contexts/DebateContext";
 
 const RECORDING_DURATION = 30; // seconds
 
@@ -16,13 +18,16 @@ declare global {
 export const SpeechRecognition = (props: {
   handleTranscriptChange: (value: string) => void;
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const language = useCurrentLanguage();
+  const { startDebate } = useDebateContext();
 
   const onError = useCallback((error: string) => {
     console.error("Speech recognition error:", error);
   }, []);
 
   const onTranscriptEnd = useCallback((text: string) => {
+    startDebate(text);
     console.log("Transcript end:", text);
   }, []);
 
@@ -30,16 +35,11 @@ export const SpeechRecognition = (props: {
     props.handleTranscriptChange,
   ]);
 
-  const language = useMemo(
-    () => (i18n.language === "en" ? "en-US" : "ru-RU"),
-    [i18n.language]
-  );
-
   const { isRecording, startRecording, stopRecording, timeLeft } =
     useSpeechRecognition({
       duration: RECORDING_DURATION,
       onTranscriptEnd,
-      language,
+      language: language === "en" ? "en-US" : "ru-RU",
       onError,
       onTranscriptChange,
     });

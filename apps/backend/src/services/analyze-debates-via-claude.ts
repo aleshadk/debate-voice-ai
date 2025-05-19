@@ -49,6 +49,7 @@ export async function analyzeDebatesViaClaude(data: AnalyzeDebateAnswerDTO) {
   const json = await res.json();
 
   try {
+    // TODO: can I do it with zod?
     const parsed = extractJsonFromClaudeText(json.content?.[0]?.text);
 
     if (typeof parsed.feedback !== "string") {

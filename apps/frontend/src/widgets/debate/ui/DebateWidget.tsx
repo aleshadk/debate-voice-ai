@@ -5,15 +5,20 @@ import { LanguageSwitcher } from "@/features/debate/language-switcher/LanguageSw
 import { SpeechRecognition } from "@/features/debate/speech-recognition/SpeechRecognition";
 import { Feedback } from "@/features/debate/feedback/Feedback";
 import { NextTopic } from "@/features/debate/next-topic/NextTopic";
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
+import { useDebateContext } from "@/contexts/DebateContext";
 
 export const DebateWidget = () => {
+  const { topic } = useDebateContext();
   const { t } = useTranslation();
   const [transcript, setTranscript] = useState("");
 
-  const handleTranscriptChange = useCallback((value: string) => {
-    setTranscript(value);
-  }, [setTranscript]);
+  const handleTranscriptChange = useCallback(
+    (value: string) => {
+      setTranscript(value);
+    },
+    [setTranscript]
+  );
 
   return (
     <div className="max-w-3xl mx-auto space-y-12">
@@ -41,7 +46,11 @@ export const DebateWidget = () => {
           >
             {t("debate.enterTopic")}
           </label>
-          <Textarea id="topic" placeholder={t("debate.enterTopic")} />
+          <Textarea
+            id="topic"
+            placeholder={t("debate.enterTopic")}
+            value={topic}
+          />
         </div>
       </Card>
 
@@ -54,7 +63,7 @@ export const DebateWidget = () => {
           {t("debate.recognizedSpeech")}
         </h2>
         <p className="text-gray-600 text-lg">
-          {transcript ? transcript :t("debate.recognizedSpeechPlaceholder")}
+          {transcript ? transcript : t("debate.recognizedSpeechPlaceholder")}
         </p>
       </Card>
 
