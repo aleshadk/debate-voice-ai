@@ -1,10 +1,8 @@
-# 🧠 Debate Voice AI Assistant
+# 🧠 Debate Voice AI Assistant [[Live demo]](https://aleshadk.github.io/debate-voice-ai)
 
 > 🇬🇧 English version is below
 
 > ⚠️ **Важно**: Бэкенд размещён на бесплатном Render-сервере. Он может "засыпать", поэтому **первый запрос** после долгого простоя может обрабатываться **дольше обычного**.
-
----
 
 ## Что это?
 
@@ -17,13 +15,9 @@
 - получить **развёрнутый фидбек** от AI,
 - выбрать одну из трёх follow-up тем для продолжения дискуссии.
 
----
-
 ## Для ревьюера
 
 Наибольший интерес представляют [`логика с распознаванием речи`](https://github.com/aleshadk/debate-voice-ai/tree/main/apps/frontend/src/features/debate/speech-recognition). Проект на 90% писался при помощи Claude, но эти файлы я отрефакторил вручную. Очень хотел избежать большого god-файла, а попытка декомпозиции вызвала усложнение отдельных компонентов. Но мне это все равно нравится больше одного гигантского файла. Хотел ещё написать тесты, но на это не хватило энергии.
-
----
 
 ## Технологии
 
@@ -54,8 +48,6 @@
 - Claude 3.7
 - Cursor
 - ChatGPT
-
----
 
 ## 🧹 Что можно улучшить
 
@@ -100,15 +92,11 @@ The app allows you to:
 - receive **detailed feedback** from an AI assistant,
 - choose one of three follow-up topics to continue the debate.
 
----
-
 ## For reviewers
 
 The most interesting part is the [`speech recognition logic`](https://github.com/aleshadk/debate-voice-ai/tree/main/apps/frontend/src/features/debate/speech-recognition).  
 About 90% of the project was written with Claude's help, but I manually refactored these files. I really wanted to avoid a giant god-file. My attempt to decompose the logic led to slightly more complex individual components — but I still prefer it over one massive file.  
 I also wanted to write tests, but ran out of energy.
-
----
 
 ## Technologies
 
@@ -139,8 +127,6 @@ I also wanted to write tests, but ran out of energy.
 - Claude 3.7
 - Cursor
 - ChatGPT
-
----
 
 ## 🧹 What could be improved
 
